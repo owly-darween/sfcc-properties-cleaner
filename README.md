@@ -1,12 +1,11 @@
 
 # Properties Cleaner - Conflict Resolution Tool
 
-This repository contains a Flask-based tool for managing and resolving conflicts in properties files for different locales. The tool allows you to:
+This repository contains a tool for managing and resolving conflicts in properties files for different locales. The tool works in three main steps:
 
-1. Load a conflict report from an Excel file.
-2. Select a locale and review the conflicting translations.
-3. Choose the best translation for each conflict.
-4. Automatically update the merged properties files.
+1. **Download** your different app_xxx cartridges.
+2. **Run the `properties_parser.py`** script to create the Excel file `conflict_details_report.xlsx`.
+3. **Run the `properties_cleaner.py`** script to resolve the conflicts via the Flask interface.
 
 ## Features
 
@@ -45,9 +44,16 @@ pip install flask pandas openpyxl watchdog
     cd properties_cleaner
     ```
 
-2. Make sure your conflict report is available as an Excel file in the repository folder. The file should be named `conflict_details_report.xlsx` and contain the conflicts for different locales.
+2. **Step 1**: Download your different app_xxx cartridges and place them in the appropriate directory.
 
-3. Run the application:
+3. **Step 2**: Run the `properties_parser.py` script to generate the conflict report:
+    ```bash
+    python properties_parser.py
+    ```
+
+    This will create an Excel file named `conflict_details_report.xlsx` that contains all the detected conflicts between the different properties files in your cartridges.
+
+4. **Step 3**: Run the `properties_cleaner.py` Flask application:
     ```bash
     python properties_cleaner.py
     ```
@@ -101,6 +107,7 @@ properties_cleaner/
 │   └── index.html                  # Main interface for resolving conflicts
 ├── static/                         # Optional: For storing static files like CSS
 ├── properties_cleaner.py            # The Flask app that runs the conflict resolver
+├── properties_parser.py             # The parser that generates the conflict report
 └── README.md                       # This documentation
 ```
 
