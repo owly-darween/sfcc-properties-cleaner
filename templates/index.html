@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résolution des conflits de propriétés</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .conflict-info {
+            margin-bottom: 20px;
+        }
+
+        .conflict-info strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+
+        ul li {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .progress {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .progress span {
+            font-weight: bold;
+        }
+
+        .locale-selector {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Résolution des conflits de propriétés</h1>
+
+    <div class="locale-selector">
+        <form action="{{ url_for('index') }}" method="post">
+            <label for="locale">Choisissez la locale :</label>
+            <select name="locale" id="locale">
+                {% for locale in available_locales %}
+                    <option value="{{ locale }}" {% if locale == selected_locale %}selected{% endif %}>
+                        {{ locale }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Valider</button>
+        </form>
+    </div>
+
+    {% if conflict %}
+        <div class="progress">
+            Conflit <span>{{ conflict.index + 1 }}</span> sur <span>{{ total_conflicts }}</span>
+        </div>
+
+        <div class="conflict-info">
+            <strong>Fichier : {{ conflict.file_name }} | Locale : {{ conflict.locale }}</strong>
+            <strong>Propriété : {{ conflict.property_name }}</strong>
+
+            <p><strong>Valeurs des applications :</strong></p>
+            <ul>
+                {% for app, value in conflict.conflict_values.items() %}
+                    <li>{{ app }} : {{ value }}</li>
+                {% endfor %}
+            </ul>
+
+            <p><strong>Valeur la plus courante :</strong> {{ conflict.most_common_value }} ({{ conflict.most_common_count }} occurrences)</p>
+        </div>
+
+        <form action="{{ url_for('resolve_conflict') }}" method="post">
+            <input type="hidden" name="conflict_index" value="{{ conflict.index }}">
+            <label for="chosen_value">Choisissez une valeur :</label>
+            <select name="chosen_value" id="chosen_value">
+                {% for value in conflict.conflict_values.values() %}
+                    <option value="{{ value }}" {% if value == conflict.most_common_value %}selected{% endif %}>
+                        {{ value }}
+                    </option>
+                {% endfor %}
+            </select>
+            <br>
+            <button type="submit">Valider et passer au suivant</button>
+        </form>
+    {% else %}
+        <p>Aucun conflit à afficher pour cette locale.</p>
+    {% endif %}
+</div>
+
+</body>
+</html>
