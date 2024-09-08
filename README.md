@@ -1,4 +1,9 @@
 
+# Video - Demo
+
+[Watch the video on YouTube](https://www.youtube.com/watch?v=DhIp1XLn1NM)
+
+
 # Properties Cleaner - Conflict Resolution Tool
 
 This repository contains a tool for managing and resolving conflicts in properties files for different locales. The tool works in three main steps:
