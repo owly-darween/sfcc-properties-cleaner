@@ -4,8 +4,9 @@
 This repository contains a tool for managing and resolving conflicts in properties files for different locales. The tool works in three main steps:
 
 1. **Download** your different app_xxx cartridges.
-2. **Run the `properties_parser.py`** script to create the Excel file `conflict_details_report.xlsx`.
-3. **Run the `properties_cleaner.py`** script to resolve the conflicts via the Flask interface.
+2. **Add the Python files at the root**
+3. **Run the `properties_parser.py`** script to create the Excel file `conflict_details_report.xlsx`.
+4. **Run the `properties_cleaner.py`** script to resolve the conflicts via the Flask interface.
 
 ## Features
 
