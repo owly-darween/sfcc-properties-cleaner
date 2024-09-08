@@ -80,7 +80,7 @@ def index():
                 conflict_index = 0  # Go back to the beginning if conflicts are exceeded
 
             row = filtered_conflicts.iloc[conflict_index]
-            file_name = row['Fichier']
+            file_name = row['File']
             locale = row['Locale']
             property_name = row['Properties Name']
 
@@ -124,7 +124,7 @@ def resolve_conflict():
 
     # Retrieve the selected conflict
     row = filtered_conflicts.iloc[conflict_index]
-    file_name = row['Fichier']
+    file_name = row['File']
     locale = row['Locale']
     property_name = row['Properties Name']
 
