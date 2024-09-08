@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résolution des conflits de propriétés</title>
+    <title>Properties Cleaner - Conflict Resolution Tool for Salesforce B2C Commerce Cloud</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -94,11 +94,11 @@
 <body>
 
 <div class="container">
-    <h1>Résolution des conflits de propriétés</h1>
+    <h1>Properties Cleaner - Conflict Resolution Tool for Salesforce B2C Commerce Cloud</h1>
 
     <div class="locale-selector">
         <form action="{{ url_for('index') }}" method="post">
-            <label for="locale">Choisissez la locale :</label>
+            <label for="locale">Choose the locale :</label>
             <select name="locale" id="locale">
                 {% for locale in available_locales %}
                     <option value="{{ locale }}" {% if locale == selected_locale %}selected{% endif %}>
@@ -106,32 +106,32 @@
                     </option>
                 {% endfor %}
             </select>
-            <button type="submit">Valider</button>
+            <button type="submit">Submit</button>
         </form>
     </div>
 
     {% if conflict %}
         <div class="progress">
-            Conflit <span>{{ conflict.index + 1 }}</span> sur <span>{{ total_conflicts }}</span>
+            Conflict <span>{{ conflict.index + 1 }}</span> sur <span>{{ total_conflicts }}</span>
         </div>
 
         <div class="conflict-info">
-            <strong>Fichier : {{ conflict.file_name }} | Locale : {{ conflict.locale }}</strong>
-            <strong>Propriété : {{ conflict.property_name }}</strong>
+            <strong>File : {{ conflict.file_name }} | Locale : {{ conflict.locale }}</strong>
+            <strong>Propertie : {{ conflict.property_name }}</strong>
 
-            <p><strong>Valeurs des applications :</strong></p>
+            <p><strong>Values :</strong></p>
             <ul>
                 {% for app, value in conflict.conflict_values.items() %}
                     <li>{{ app }} : {{ value }}</li>
                 {% endfor %}
             </ul>
 
-            <p><strong>Valeur la plus courante :</strong> {{ conflict.most_common_value }} ({{ conflict.most_common_count }} occurrences)</p>
+            <p><strong>Most Common Value :</strong> {{ conflict.most_common_value }} ({{ conflict.most_common_count }} occurrences)</p>
         </div>
 
         <form action="{{ url_for('resolve_conflict') }}" method="post">
             <input type="hidden" name="conflict_index" value="{{ conflict.index }}">
-            <label for="chosen_value">Choisissez une valeur :</label>
+            <label for="chosen_value">Choose the best translation :</label>
             <select name="chosen_value" id="chosen_value">
                 {% for value in conflict.conflict_values.values() %}
                     <option value="{{ value }}" {% if value == conflict.most_common_value %}selected{% endif %}>
@@ -140,10 +140,10 @@
                 {% endfor %}
             </select>
             <br>
-            <button type="submit">Valider et passer au suivant</button>
+            <button type="submit">Submit & Next</button>
         </form>
     {% else %}
-        <p>Aucun conflit à afficher pour cette locale.</p>
+        <p>No Conflict has been found</p>
     {% endif %}
 </div>
 
